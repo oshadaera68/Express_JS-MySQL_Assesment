@@ -1,4 +1,3 @@
-const { query } = require('express')
 const express = require('express')
 const mysql = require('mysql')
 const dbase = require('../configs/db.configs')
