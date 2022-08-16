@@ -5,7 +5,7 @@ const port = 3000
 
 app.use(express.json())
 
-app.use('/customers',customer)
+app.use('/customer',customer)
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
