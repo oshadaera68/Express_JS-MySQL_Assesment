@@ -4,6 +4,7 @@ const dbase = require('../configs/db.configs')
 const router = express.Router()
 const connection = mysql.createConnection(dbase.database)
 
+// creating customer table
 connection.connect(function (err) {
     if (err) {
         console.log(err);
@@ -38,9 +39,9 @@ router.post('/', (req, res) => {
 
     connection.query(saveQuery, [id, name, address, salary], (err) => {
         if (err) {
-            res.send({ "message": "Successfully Saved" })
+            res.send({ "message": "duplicate entry" })
         } else {
-            res.send({ "message": "Customer is not saved" })
+            res.send({ "message": "Customer saved" })
         }
     })
 })
@@ -59,7 +60,7 @@ router.put('/', (req, res) => {
         if (rows.affectedRows > 0) {
             res.send({ "message": "customer updated" })
         } else {
-            res.send({ "message": "customer is not found" })
+            res.send({ "message": "customer is not found. try again" })
         }
     })
 })
@@ -70,6 +71,26 @@ router.get('/:id', (req, res) => {
 
     var seacrhQuery = "SELECT * FROM customer WHERE id=?"
 
-
+    connection.query(seacrhQuery, [id], (err, row) => {
+        if (err) console.log(err);
+        res.send(row);
+    })
 })
+
+// delete customer
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    var deleteQuery = "DELETE FROM customer WHERE id=?";
+
+    connection.query(deleteQuery, [id], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "customer is deleted" })
+        } else {
+            res.send({ "message": "customer is not found. try again" })
+        }
+    })
+})
+
 module.exports = router;
