@@ -18,6 +18,7 @@ connection.connect(function (err) {
     }
 })
 
+// get all customer
 router.get('/', (req, res) => {
     var getAllQuery = "SELECT * FROM customer";
     connection.query(getAllQuery, (err, rows) => {
@@ -26,7 +27,7 @@ router.get('/', (req, res) => {
     })
 })
 
-
+// save customer
 router.post('/', (req, res) => {
     const id = req.body.id;
     const name = req.body.name;
@@ -44,4 +45,31 @@ router.post('/', (req, res) => {
     })
 })
 
+//update customer
+router.put('/', (req, res) => {
+    const id = req.body.id;
+    const name = req.body.name;
+    const address = req.body.address;
+    const salary = req.body.salary;
+
+    var updateQuery = "UPDATE customer SET name=?, address=?, salary=? WHERE id=?";
+    connection.query(updateQuery, [name, address, salary, id], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "customer updated" })
+        } else {
+            res.send({ "message": "customer is not found" })
+        }
+    })
+})
+
+//search customer
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+
+    var seacrhQuery = "SELECT * FROM customer WHERE id=?"
+
+
+})
 module.exports = router;
