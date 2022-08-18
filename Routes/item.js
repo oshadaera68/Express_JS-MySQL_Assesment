@@ -79,7 +79,7 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-// search item
+// search
 router.get('/:id',(req,res)=>{
     const code = req.params.code
     var searchItemQuery = "SELECT * FROM item WHERE code=?"
