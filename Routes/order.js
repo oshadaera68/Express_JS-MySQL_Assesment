@@ -9,8 +9,15 @@ connection.connect(function (err){
     if (err) {
         console.log(err);
     } else {
-        // var 
+        var orderTable = "CREATE TABLE IF NOT EXISTS orders (id VARCHAR(10) PRIMARY KEY, date DATE, cusId VARCHAR(6), CONSTRAINT FOREIGN KEY(cusId) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+        connection.query(orderTable, function (err, result) {
+            if (result.warningCount === 0) {
+                console.log("table created");
+            }
+        })
     }
 })
+
+//get all order
 
 module.exports = router
