@@ -32,13 +32,58 @@ router.post('/', (req,res)=>{
     const id = req.body.id
     const date = req.body.date
     const cusId = req.body.cusId
+
     var saveOrderQuery = "INSERT INTO orders(id,date,cusId) VALUES(?,?,?)";
+
     connection.query(saveOrderQuery, [id,date,cusId], (err) => {
         if (err) {
             res.send({ "message": "duplicate entry" })
         } else {
             res.send({ "message": "order saved" })
         }
+    })
+})
+
+// update order
+router.put('/', (req,res)=>{
+    const id = req.body.id
+    const date = req.body.date
+    const cusId = req.body.cusId
+
+    var updateOrderQuery = "UPDATE orders date=?, cusId=?, WHERE id=?";
+    connection.query(updateOrderQuery, [date, cusId, id], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "order updated" })
+        } else {
+            res.send({ "message": "order is not found. try again" })
+        }
+    })
+})
+
+// delete order
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    var deleteOrderQuery = "DELETE FROM orders WHERE id=?";
+    connection.query(deleteOrderQuery, [id], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "order is deleted" })
+        } else {
+            res.send({ "message": "order is not found. try again" })
+        }
+    })
+})
+
+// search order
+router.get('/:id',(req,res)=>{
+    const id = req.params.id
+    var searchOrderQuery = "SELECT * FROM orders WHERE id=?"
+    connection.query(searchOrderQuery, [id], (err, row) => {
+        if (err) console.log(err);
+        res.send(row);
     })
 })
 
