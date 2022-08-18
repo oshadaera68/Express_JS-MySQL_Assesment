@@ -27,4 +27,19 @@ router.get('/', (req, res) => {
     })
 })
 
+// save order
+router.post('/', (req,res)=>{
+    const id = req.body.id
+    const date = req.body.date
+    const cusId = req.body.cusId
+    var saveOrderQuery = "INSERT INTO orders(id,date,cusId) VALUES(?,?,?)";
+    connection.query(saveOrderQuery, [id,date,cusId], (err) => {
+        if (err) {
+            res.send({ "message": "duplicate entry" })
+        } else {
+            res.send({ "message": "order saved" })
+        }
+    })
+})
+
 module.exports = router
