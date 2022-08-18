@@ -45,6 +45,7 @@ router.post('/', (req, res) => {
     })
 })
 
+// update item
 router.put('/', (req, res) => {
     const code = req.body.code
     const description = req.body.description
@@ -63,6 +64,7 @@ router.put('/', (req, res) => {
     })
 })
 
+// delete item
 router.delete('/:id', (req, res) => {
     const code = req.params.code
     var deleteItemQuery = "DELETE FROM item WHERE code=?";
@@ -74,6 +76,16 @@ router.delete('/:id', (req, res) => {
         } else {
             res.send({ "message": "customer is not found. try again" })
         }
+    })
+})
+
+// search item
+router.get('/:id',(req,res)=>{
+    const code = req.params.code
+    var searchItemQuery = "SELECT * FROM item WHERE code=?"
+    connection.query(searchItemQuery, [code], (err, row) => {
+        if (err) console.log(err);
+        res.send(row);
     })
 })
 
