@@ -5,7 +5,7 @@ const router = express.Router()
 const connection = mysql.createConnection(dbase.database)
 
 // creating order table
-connection.connect(function (err){
+connection.connect(function (err) {
     if (err) {
         console.log(err);
     } else {
@@ -19,5 +19,12 @@ connection.connect(function (err){
 })
 
 //get all order
+router.get('/', (req, res) => {
+    var getAllOrderQuery = "SELECT * FROM orders";
+    connection.query(getAllOrderQuery, (err, rows) => {
+        if (err) console.log(err)
+        res.send(rows)
+    })
+})
 
 module.exports = router
