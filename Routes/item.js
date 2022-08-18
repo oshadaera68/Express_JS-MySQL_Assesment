@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/',(req,res)=>{
+router.put('/', (req, res) => {
     const code = req.body.code
     const description = req.body.description
     const qtyOnHand = req.body.qtyOnHand
@@ -61,7 +61,20 @@ router.put('/',(req,res)=>{
             res.send({ "message": "item is not found. try again" })
         }
     })
+})
 
+router.delete('/:id', (req, res) => {
+    const code = req.params.code
+    var deleteItemQuery = "DELETE FROM item WHERE code=?";
+    connection.query(deleteItemQuery, [code], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "customer is deleted" })
+        } else {
+            res.send({ "message": "customer is not found. try again" })
+        }
+    })
 })
 
 module.exports = router;
