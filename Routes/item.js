@@ -45,4 +45,23 @@ router.post('/', (req, res) => {
     })
 })
 
+router.put('/',(req,res)=>{
+    const code = req.body.code
+    const description = req.body.description
+    const qtyOnHand = req.body.qtyOnHand
+    const unitPrice = req.body.unitPrice
+
+    var updateItemQuery = "UPDATE item SET description=?, qtyOnHand=?, unitPrice=? WHERE code=?";
+    connection.query(updateItemQuery, [description, qtyOnHand, unitPrice, code], (err, rows) => {
+        if (err) console.log(err);
+
+        if (rows.affectedRows > 0) {
+            res.send({ "message": "item updated" })
+        } else {
+            res.send({ "message": "item is not found. try again" })
+        }
+    })
+
+})
+
 module.exports = router;
