@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 
     var saveItemQuery = "INSERT INTO item(code,description,qtyOnHand,unitPrice) VALUES(?,?,?,?)";
 
-    connection.query(saveItemQuery, [code, description, qtyOnHand, unitPrice], (err, rows) => {
+    connection.query(saveItemQuery, [code, description, qtyOnHand, unitPrice], (err) => {
         if (err) {
             res.send({ "message": "duplicate entry" })
         } else {
