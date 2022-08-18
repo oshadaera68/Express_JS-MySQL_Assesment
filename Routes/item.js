@@ -27,4 +27,22 @@ router.get('/', (req, res) => {
     })
 })
 
+// save item
+router.post('/', (req, res) => {
+    const code = req.body.code
+    const description = req.body.description
+    const qtyOnHand = req.body.qtyOnHand
+    const unitPrice = req.body.unitPrice
+
+    var saveItemQuery = "INSERT INTO item(code,description,qtyOnHand,unitPrice) VALUES(?,?,?,?)";
+
+    connection.query(saveItemQuery, [code, description, qtyOnHand, unitPrice], (err, rows) => {
+        if (err) {
+            res.send({ "message": "duplicate entry" })
+        } else {
+            res.send({ "message": "item saved" })
+        }
+    })
+})
+
 module.exports = router;
