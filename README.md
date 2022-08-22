@@ -8,6 +8,7 @@ A Sample endpoints with using Express Js with crud operation.
 
 ## Using npm packages
  - nodemon (npm i nodemon)
+ - mysql (npm install mysql)
 
 ## Copyright By
  - Oshada Eranga
