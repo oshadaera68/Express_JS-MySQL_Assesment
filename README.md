@@ -1,4 +1,4 @@
-# Express-JS-Assesment
+# Express_JS-MySQL_Assesment
 A Sample endpoints with using Express Js with crud operation.
 
 ## Using Technologies
